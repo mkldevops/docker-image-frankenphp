@@ -22,7 +22,9 @@ RUN apk add --no-cache \
 		file \
 		gettext \
 		git \
-        build-base zsh shadow \
+        build-base \
+        zsh \
+        shadow \
 	;
 
 # Symfony cli
@@ -39,12 +41,7 @@ RUN set -eux; \
     	pdo_pgsql \
 	;
 
-
 COPY --link frankenphp/conf.d/app.ini $PHP_INI_DIR/conf.d/
-COPY --link --chmod=755 frankenphp/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-COPY --link frankenphp/Caddyfile /etc/caddy/Caddyfile
-
-ENTRYPOINT ["docker-entrypoint"]
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -53,4 +50,3 @@ ENV PATH="${PATH}:/root/.composer/vendor/bin"
 COPY --from=composer_upstream --link /composer /usr/bin/composer
 
 HEALTHCHECK --start-period=60s CMD curl -f http://localhost:2019/metrics || exit 1
-CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
