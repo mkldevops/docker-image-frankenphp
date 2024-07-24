@@ -17,7 +17,7 @@ WORKDIR /app
 
 # persistent / runtime deps
 # hadolint ignore=DL3018
-RUN apk add --no-cache \
+RUN apk add --no-cache  bash \
 		acl \
 		file \
 		gettext \
@@ -41,7 +41,7 @@ RUN set -eux; \
     	pdo_pgsql \
 	;
 
-RUN curl "https://castor.jolicode.com/install" | sh \
+RUN curl "https://castor.jolicode.com/install" | bash \
     && mv $HOME/.local/bin/castor /usr/local/bin/castor \
     && chmod +x /usr/local/bin/castor
 
