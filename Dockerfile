@@ -41,9 +41,9 @@ RUN set -eux; \
     	pdo_pgsql \
 	;
 
-RUN curl "https://castor.jolicode.com/install" | bash \
-    && sudo mv $HOME/.local/bin/castor /usr/local/bin/castor \
-    && sudo chmod +x /usr/local/bin/castor
+RUN curl "https://castor.jolicode.com/install" | sh \
+    && mv $HOME/.local/bin/castor /usr/local/bin/castor \
+    && chmod +x /usr/local/bin/castor
 
 COPY --link frankenphp/conf.d/app.ini $PHP_INI_DIR/conf.d/
 
